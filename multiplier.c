@@ -6,13 +6,24 @@
 /*   By: ysibous <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 12:25:00 by ysibous           #+#    #+#             */
-/*   Updated: 2018/04/06 12:27:57 by ysibous          ###   ########.fr       */
+/*   Updated: 2018/04/06 14:14:21 by ysibous          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <stdio.h>
 
+void	get_numeric_value(char **str, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		(str[i]) -= '0';
+		i++;
+	}
+}
 char	*mult(char *num_x, char *num_y)
 {
 	int i_x;
@@ -24,24 +35,39 @@ char	*mult(char *num_x, char *num_y)
 	char *y;
 	char *r;
 	int carry;
+	int sign;
+	char *output;
 
+	sign = 1;
+	if (num_x[0] == '-')
+	{
+		num_x++;
+		sign *= -1;
+	}
+	if (num_y[0] == '-')
+	{
+		num_y++;
+		sign *= -1;
+	}
+	if (ft_atoi(num_x) >= ft_atoi(num_y))
+		ft_swapstr(&num_x, &num_y);
 	i_x = i_y = i_r = 0;
 	len_x = ft_strlen(num_x);
 	len_y = ft_strlen(num_y);
 	r = (char *)ft_memalloc(sizeof(char) * (len_x + len_y + 1));
-	x = ft_strdup(num_x);
-	y = ft_strdup(num_y);
-	//ft_strcpy(x, num_x);
+	x = ft_strnew(len_x);
+	ft_strcpy(x, num_x);
 	while (i_x < len_x)
 	{
 		x[i_x] -= '0';
-		i_x++;
+		++i_x;
 	}
-	//ft_strcpy(y, num_y);
+	y = ft_strnew(len_y);
+	ft_strcpy(y, num_y);
 	while (i_y < len_y)
 	{
 		y[i_y] -= '0';
-		i_y++;
+		++i_y;
 	}
 	i_x = len_x - 1;
 	i_y = len_y - 1;
@@ -65,17 +91,22 @@ char	*mult(char *num_x, char *num_y)
 	while (i_r < len_x + len_y)
 	{
 		r[i_r] += '0';
-		++i_r;
+		i_r++;
 	}
-	while (r[0] == '0')
-		ft_memmove(r, &r[1], len_x + len_y);
 	free(x);
 	free(y);
+	if (sign == -1)
+	{
+		output = ft_strnew((ft_strlen(r) + 1));
+		output[0] = '-';
+		ft_strcpy((output + 1), r);
+		return (output);
+	}
 	return (r);
 }
 
 int main()
 {
-	printf("%s\n", mult("1115", "3"));
+	printf("%s\n", mult("5", "-5000000000020302030203000"));
 }
 
