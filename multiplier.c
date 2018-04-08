@@ -6,24 +6,13 @@
 /*   By: ysibous <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 12:25:00 by ysibous           #+#    #+#             */
-/*   Updated: 2018/04/06 14:14:21 by ysibous          ###   ########.fr       */
+/*   Updated: 2018/04/07 17:02:12 by ysibous          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <stdio.h>
 
-void	get_numeric_value(char **str, int len)
-{
-	int i;
-
-	i = 0;
-	while (i < len)
-	{
-		(str[i]) -= '0';
-		i++;
-	}
-}
 char	*mult(char *num_x, char *num_y)
 {
 	int i_x;
@@ -49,21 +38,76 @@ char	*mult(char *num_x, char *num_y)
 		num_y++;
 		sign *= -1;
 	}
+	int z = 0;
+	int count_x = 0;
+	int is_flt = 0;
+	int count_y = 0;
+	/*while (num_x[z])
+	{
+		if (is_flt)
+			count_x++;
+		if (num_x[z] == '.')
+			is_flt = 1;
+		z++;
+	}
+	z = 0;
+	is_flt = 0;
+	while (num_y[z])
+	{
+		if (is_flt)
+			count_y++;
+		if (num_y[z] == '.')
+			is_flt = 1;
+		z++;
+	}*/
+	printf("%d\n", count_x);
+	printf("%d\n", count_y);
 	if (ft_atoi(num_x) >= ft_atoi(num_y))
 		ft_swapstr(&num_x, &num_y);
 	i_x = i_y = i_r = 0;
 	len_x = ft_strlen(num_x);
 	len_y = ft_strlen(num_y);
 	r = (char *)ft_memalloc(sizeof(char) * (len_x + len_y + 1));
-	x = ft_strnew(len_x);
-	ft_strcpy(x, num_x);
+	/*if (count_y > count_x && count_x == 0)
+	{
+		x = ft_strnew(len_x + count_y + 1);
+		ft_strcpy(x, num_x);
+		x[len_x] = '.';
+
+		printf("%s\n", x);
+	}
+	else if (count_y > count_x && count_x != 0)
+	{
+		x = ft_strnew(len_x + (count_y - count_x));
+		ft_strcpy(x, num_x);
+	}
+	else*/
+	//{
+		x = ft_strnew(len_x);
+		ft_strcpy(x, num_x);
+//	}
 	while (i_x < len_x)
 	{
 		x[i_x] -= '0';
 		++i_x;
 	}
-	y = ft_strnew(len_y);
-	ft_strcpy(y, num_y);
+/*	if (count_x > count_y && count_y == 0)
+	{
+		y = ft_strnew(len_y + count_x + 1);
+		ft_strcpy(y, num_y);
+		y[len_y] = '.';
+		printf("%s\n", y);
+	}
+	else if (count_x > count_y && count_y != 0)
+	{
+		y = ft_strnew(len_x + (count_x - count_y));
+		ft_strcpy(y, num_y);
+	}
+	else*/
+//	{
+		y = ft_strnew(len_y);
+		ft_strcpy(y, num_y);
+//	}
 	while (i_y < len_y)
 	{
 		y[i_y] -= '0';
@@ -107,6 +151,6 @@ char	*mult(char *num_x, char *num_y)
 
 int main()
 {
-	printf("%s\n", mult("5", "-5000000000020302030203000"));
+	printf("%s\n", mult("500", "5000"));
 }
 
